@@ -245,10 +245,10 @@ function Shubhh() {
                                 <label for="fullName">Full Name</label>
                                 <input type="text" id="fullName" placeholder="Your name" class="form-input" />
                             </div>
-                            <div class="form-group">
+                            {/* <div class="form-group">
                                 <label for="email">Email Address</label>
                                 <input type="email" id="email" placeholder="your@email.com" class="form-input" />
-                            </div>
+                            </div> */}
                         </div>
 
                         <div class="form-row">
@@ -281,10 +281,10 @@ function Shubhh() {
                                 <select id="experience" class="form-select">
                                     <option value="" disabled selected>Select experience</option>
                                     <option value="vr">Virtual Reality Arena</option>
-                                    <option value="laser">Laser Tag Combat</option>
+                                    <option value="laser">PlayStation 5</option>
+                                    <option value="console">PlayStation 4</option>
                                     <option value="racing">Racing Simulators</option>
                                     <option value="arcade">Arcade Classics</option>
-                                    <option value="console">Console Gaming Lounge</option>
                                     <option value="escape">Escape Rooms</option>
                                 </select>
                             </div>
@@ -305,25 +305,25 @@ function Shubhh() {
 
                         <div class="hours-list">
                             <div class="hours-item">
-                                <span class="day">Monday - Thursday</span>
+                                <span class="day">Monday </span>
+                                <span class="time">Closed</span>
+                            </div>
+                            <div class="hours-item">
+                                <span class="day">All Days</span>
                                 <span class="time">10:00 AM - 10:00 PM</span>
                             </div>
-                            <div class="hours-item">
-                                <span class="day">Friday</span>
-                                <span class="time">10:00 AM - 12:00 AM</span>
-                            </div>
-                            <div class="hours-item">
+                            {/* <div class="hours-item">
                                 <span class="day">Saturday</span>
                                 <span class="time">9:00 AM - 1:00 AM</span>
                             </div>
                             <div class="hours-item">
                                 <span class="day">Sunday</span>
                                 <span class="time">11:00 AM - 10:00 PM</span>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
-                    {/* <!-- <div class="packages-card neon-border neon-pink"> */}
+                     {/* <div class="packages-card neon-border neon-pink">
                         <h3 class="packages-title">Group Packages</h3>
 
                         <div class="packages-list">
@@ -354,8 +354,8 @@ function Shubhh() {
                                 </div>
                             </div>
                         </div>
-                    {/* </div> --> */}
-                </div>
+                    </div>  */}
+                </div>+
             </div>
         </div>
     </section>
