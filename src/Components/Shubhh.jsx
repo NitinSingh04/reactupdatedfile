@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import '../index.css'
 import Ar from "./images/ARVR.png"
 import Xbox from "./images/Xbox.png"
@@ -10,8 +11,11 @@ import fort from "./images/fortnite.png"
 import cod from "./images/callOfDuty.png"
 
 function Shubhh() {
+    // console.log(process.env.Backend_URL,"dhruv")
+
   const createTicket = async() => {
-    const ticket = await axios.post("",{faullName},{withcredentials: true})
+    // console.log(process.env.Backend_URL,"dhruv")
+    // const ticket = await axios.post("",{faullName},{withcredentials: true})
   }
 
   return (
@@ -22,7 +26,7 @@ function Shubhh() {
             <div class="navbar-content">
                 <a href="/" class="logo">
                     {/* <!-- <i class="fas fa-bolt"></i> --> */}
-                     <img id="logophoto" src="./src/images/logo.jpg" class="" alt="" />
+                     <img id="logophoto" src={logo} class="" alt="" />
                     <span id="battleLogo" class="neon-text neon-red">BATTLEGROUND</span>
                 </a>
                 <nav class="nav-links">
@@ -116,7 +120,7 @@ function Shubhh() {
 
                     </div>
                 </div>
-
+                
                 <div class="game-card" data-color="green">
                     <div class="game-card-image">
                         <img src={Xbox} alt="Laser Tag Combat" />
@@ -128,9 +132,6 @@ function Shubhh() {
                         <a href="#booking" class="btn btn-green">Book Now</a>
                     </div>
                 </div>
-                
-               
-
                 <div class="game-card" data-color="pink">
                     <div class="game-card-image">
                         <img src={crs} alt="Racing Simulators" />
@@ -261,10 +262,23 @@ function Shubhh() {
                             </div>
                             <div class="form-group">
                                 <label for="time">Time</label>
-                                <div class="input-icon">
+                                {/* <div class="input-icon">
                                     <i class="fas fa-clock"></i>
                                     <input type="time" id="time" class="form-input" />
-                                </div>
+                                </div> */}
+                                 <select id="experience" class="form-select">
+                                    <option value="" disabled selected>Select Time</option>
+                                    <option >11:00 AM-12:00 PM</option>
+                                    <option >1:00 PM-2:00 PM</option>
+                                    <option >2:00 PM-3:00 PM</option>
+                                    <option >3:00 PM-4:00 PM</option>
+                                    <option >4:00 PM-5:00 PM</option>
+                                    <option >5:00 PM-6:00 PM</option>
+                                    <option >6:00 PM-7:00 PM</option>
+                                    <option >7:00 PM-8:00 PM</option>
+                                    <option >8:00 PM-9:00 PM</option>
+                                    <option >9:00 PM-10:00 PM</option>                                    
+                                </select>
                             </div>
                         </div>
 
@@ -494,15 +508,15 @@ function Shubhh() {
                         <div class="social-links">
                             <h3 class="social-title">Follow Us</h3>
                             <div class="social-icons">
-                                <a href="#" class="social-icon">
+                                <a href="https://www.instagram.com/the_battleground_gamezone/" class="social-icon">
                                     <i class="fab fa-instagram"></i>
                                 </a>
-                                <a href="#" class="social-icon">
+                                {/* <a href="#" class="social-icon">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
                                 <a href="#" class="social-icon">
                                     <i class="fab fa-twitter"></i>
-                                </a>
+                                </a> */}
                             </div>
                         </div>
                     </div>
