@@ -2,9 +2,9 @@ import { Ticket } from "../models/tickets.model.js";
 
 const createTicket = async (req, res) => {
   try {
-    const { mobileNumber, amount, date, timeslot, game } = req.body;
+    const { mobileNumber, amount, date, timeslot, game, guest } = req.body;
 
-    const verify = [mobileNumber, amount, date, timeslot, game].filter(
+    const verify = [mobileNumber, amount, date, timeslot, game, guest].filter(
       (item) => item == undefined || item == null
     );
 
@@ -39,6 +39,7 @@ const createTicket = async (req, res) => {
       timeslot,
       game,
       amount,
+      guest,
       flag: "Waiting",
     });
 

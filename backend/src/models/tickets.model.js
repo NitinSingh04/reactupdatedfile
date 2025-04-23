@@ -10,6 +10,10 @@ const ticketSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    guest: {
+      type: Number,
+      def: 1
+    },
     date: {
       type: String,
       required: true,
