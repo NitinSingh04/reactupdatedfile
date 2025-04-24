@@ -45,12 +45,18 @@ import {
   changeFlag,
   getTicketByDate,
 } from "./controllers/ticket.controller.js";
+import { loginAdmin, logoutAdmin, registerAdmin } from "./controllers/admin.controller.js";
 
 // Define Routes
+app.post("/api/admin/register", registerAdmin);
+app.post("/api/admin/login", loginAdmin);
+app.post("/api/admin/logout", logoutAdmin);
+
+
 app.post("/api/createTicket", createTicket);
-app.delete("/api/deleteTicket", deleteTicket);
-app.get("/api/getAllTicket", getAllTicket);
-app.put("/api/changeFlag", changeFlag);
-app.post("/api/getTicketByDate", getTicketByDate);
+app.delete("/api/deleteTicket", verifyUserJWT , deleteTicket);
+app.get("/api/getAllTicket", verifyUserJWT , getAllTicket);
+app.put("/api/changeFlag", verifyUserJWT , changeFlag);
+app.post("/api/getTicketByDate", verifyUserJWT , getTicketByDate);
 
 export { app };
