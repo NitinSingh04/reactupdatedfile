@@ -1,4 +1,4 @@
-import { Admin } from "../models/admins.model";
+import { Admin } from "../models/admins.model.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   const admin = await Admin.findById(userId);
@@ -12,7 +12,7 @@ const generateAccessAndRefreshToken = async (userId) => {
   return { accessToken, refreshToken };
 };
 
-const registerAdmin = asyncHandler(async (req, res) => {
+const registerAdmin = async (req, res) => {
   const { fullName, email, password, confirmPassword } = req.body;
 
   if (!fullName) {
@@ -102,9 +102,9 @@ const registerAdmin = asyncHandler(async (req, res) => {
       success: true,
       message: "User created successfully.",
     });
-});
+};
 
-const loginAdmin = asyncHandler(async (req, res) => {
+const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email) {
@@ -175,9 +175,9 @@ const loginAdmin = asyncHandler(async (req, res) => {
       success: true,
       message: "Logged in successfully.",
     });
-});
+};
 
-const logoutAdmin = asyncHandler(async (req, res) => {
+const logoutAdmin = async (req, res) => {
   const admin = await Admin.findByIdAndUpdate(
     req.admin._id,
     {
@@ -207,6 +207,6 @@ const logoutAdmin = asyncHandler(async (req, res) => {
       status: true,
       message: "User logout successfully.",
     });
-});
+};
 
 export { registerAdmin, loginAdmin, logoutAdmin };

@@ -45,12 +45,13 @@ import {
   changeFlag,
   getTicketByDate,
 } from "./controllers/ticket.controller.js";
+import { verifyUserJWT } from "./middlewares/auth.js";
 import { loginAdmin, logoutAdmin, registerAdmin } from "./controllers/admin.controller.js";
 
 // Define Routes
 app.post("/api/admin/register", registerAdmin);
 app.post("/api/admin/login", loginAdmin);
-app.post("/api/admin/logout", logoutAdmin);
+app.post("/api/admin/logout", verifyUserJWT, logoutAdmin);
 
 
 app.post("/api/createTicket", createTicket);

@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
-import { Admin } from "../models/admins.model";
+import { Admin } from "../models/admins.model.js";
 
 
 
-const verifyUserJWT = asyncHandler( async (req,res,next) => {
+const verifyUserJWT = async (req,res,next) => {
     const token = req.cookies?.accessToken
 
     if (!token) {
@@ -24,7 +24,7 @@ const verifyUserJWT = asyncHandler( async (req,res,next) => {
 
     req.user = user
     next()
-})
+}
 
 
 export {verifyUserJWT}
