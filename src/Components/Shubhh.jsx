@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import '../index.css'
 import Ar from "./images/ARVR.png"
@@ -11,12 +12,65 @@ import fort from "./images/fortnite.png"
 import cod from "./images/callOfDuty.png"
 
 function Shubhh() {
-    // console.log(process.env.Backend_URL,"dhruv")
+    
+    const [fullName,setFullName] = useState()
+    const [mobilenumber,setmobilenumber]= useState()
+    const [Date,setDate] = useState()
+    const [timeslot,setTimeslot] = useState()
+    const [nop,setnop] = useState()
+    const [gexp,setgexp] = useState()
+    const [specreq,setspecreq] = useState()
+    const [data,setData]= useState()
 
-  const createTicket = async() => {
-    // console.log(process.env.Backend_URL,"dhruv")
-    // const ticket = await axios.post("",{faullName},{withcredentials: true})
-  }
+    // console.log(fullName,mobilenumber,Date,timeslot,nop,gexp,specreq)
+
+    var timings=[
+                                   "11:00 AM-12:00 PM",
+                                    "1:00 PM-2:00 PM",
+                                    "2:00 PM-3:00 PM",
+                                    "3:00 PM-4:00 PM",
+                                    "4:00 PM-5:00 PM",
+                                    "5:00 PM-6:00 PM",
+                                    "6:00 PM-7:00 PM",
+                                    "7:00 PM-8:00 PM",
+                                    "8:00 PM-9:00 PM",
+                                    "9:00 PM-10:00 PM", 
+    ]
+
+    var gamesexp=[
+"Virtual Reality Arena",
+"PlayStation VR",
+        "PlayStation 5 (I)",
+        "PlayStation 5 (II)",
+        "PlayStation 5 (III)",
+        "PlayStation 4 (I)",
+        "PlayStation 4 (II)",
+        "Racing Simulators",
+        "Arcade Classics",
+    ]
+
+                                    
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setBData(prevState => ({
+    //       ...prevState,
+    //       [name]: value
+    //     }));
+    //   };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.post('https://finalbgmi-backend.onrender.com/api/createTicket', {mobileNumber:mobilenumber, amount:100, date:Date, timeslot:timeslot, game:gexp, guest:nop});
+          console.log('booking successful:', response.data);
+        //   setData(response.data.message)
+         
+        } catch (error) {
+          console.error('Login failed:', error.response?.data || error.message);
+        }
+      };
+    
+
 
   return (
     <div id="main">  
@@ -240,16 +294,19 @@ function Shubhh() {
                 <div class="booking-form neon-border neon-green">
                     <h3 class="booking-form-title">Booking Form</h3>
 
-                    <form id="bookingForm">
+                    <form onSubmit={handleSubmit} id="bookingForm">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="fullName">Full Name</label>
-                                <input type="text" id="fullName" placeholder="Your name" class="form-input" />
+                                <input type="text" id="fullName" placeholder="Your name" class="form-input" value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                required />
                             </div>
-                            {/* <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" placeholder="your@email.com" class="form-input" />
-                            </div> */}
+                            <div class="form-group">
+                                <label for="mobile number">Mobile Number</label>
+                                <input type="" id="Mnumber" placeholder="Mobile Number" class="form-input" onChange={(e) => setmobilenumber(e.target.value)}
+                                required />
+                            </div>
                         </div>
 
                         <div class="form-row">
@@ -257,7 +314,8 @@ function Shubhh() {
                                 <label for="date">Date</label>
                                 <div class="input-icon">
                                     <i class="fas fa-calendar"></i>
-                                    <input type="date" id="date" class="form-input" />
+                                    <input type="date" id="date" class="form-input" onChange={(e) => setDate(e.target.value)}
+                                required />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -266,18 +324,11 @@ function Shubhh() {
                                     <i class="fas fa-clock"></i>
                                     <input type="time" id="time" class="form-input" />
                                 </div> */}
-                                 <select id="experience" class="form-select">
+                                 <select id="experience" class="form-select" onChange={(e) => setTimeslot(e.target.value)}>
                                     <option value="" disabled selected>Select Time</option>
-                                    <option >11:00 AM-12:00 PM</option>
-                                    <option >1:00 PM-2:00 PM</option>
-                                    <option >2:00 PM-3:00 PM</option>
-                                    <option >3:00 PM-4:00 PM</option>
-                                    <option >4:00 PM-5:00 PM</option>
-                                    <option >5:00 PM-6:00 PM</option>
-                                    <option >6:00 PM-7:00 PM</option>
-                                    <option >7:00 PM-8:00 PM</option>
-                                    <option >8:00 PM-9:00 PM</option>
-                                    <option >9:00 PM-10:00 PM</option>                                    
+                                    {timings.map((t,index) => (
+                                        <option key={index} value={timeslot}>{t}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -287,19 +338,24 @@ function Shubhh() {
                                 <label for="people">Number of People</label>
                                 <div class="input-icon">
                                     <i class="fas fa-users"></i>
-                                    <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" />
+                                    <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" onChange={(e) => setnop(e.target.value)}
+                                required />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="experience">Gaming Experience</label>
-                                <select id="experience" class="form-select">
+                                <select id="experience" class="form-select" onChange={(e) => setgexp(e.target.value)}>
                                     <option value="" disabled selected>Select experience</option>
-                                    <option value="vr">Virtual Reality Arena</option>
+                                    {/* <option value="vr">Virtual Reality Arena</option>
                                     <option value="laser">PlayStation 5</option>
                                     <option value="console">PlayStation 4</option>
                                     <option value="racing">Racing Simulators</option>
                                     <option value="arcade">Arcade Classics</option>
-                                    <option value="escape">Escape Rooms</option>
+                                    <option value="escape">Escape Rooms</option> */}
+                                    {gamesexp.map((t,index) => (
+                                        <option key={index} value={gexp} >{t}</option>
+                                    ))}
+
                                 </select>
                             </div>
                         </div>
@@ -309,7 +365,8 @@ function Shubhh() {
                             <textarea id="requests" rows="4" placeholder="Any special requirements or requests" class="form-textarea"></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-gradient-green-blue btn-full">Book Now</button>
+                        <button type="submit" onSubmit={handleSubmit} class="btn btn-gradient-green-blue btn-full">Book Now</button>
+                        {/* <div>{data}</div> */}
                     </form>
                 </div>
 
@@ -525,7 +582,7 @@ function Shubhh() {
                 <div class="location-map neon-purple">
                     <img id="loca" src={location} alt="Location Map" />
                     <div class="map-overlay">
-                        <button class="btn btn-purple">Get Directions</button>
+                        <a href="https://www.google.co.in/maps/place/BATTLEGROUND+GAMEZONE+ALIGARH/@27.8967597,78.0972301,20z/data=!4m6!3m5!1s0x3974a51ad1e97e17:0x7431380e8c40918d!8m2!3d27.8966537!4d78.0972868!16s%2Fg%2F11td0q51j7?entry=ttu&g_ep=EgoyMDI1MDQyMC4wIKXMDSoASAFQAw%3D%3D" class="btn btn-purple">Get Directions</a>
                     </div>
                 </div>
             </div>
