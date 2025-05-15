@@ -38,9 +38,13 @@ function Shubhh() {
     //                                 "9:00 PM-10:00 PM", 
     // ]
 
+    var prices=[
+        {"ps4":100},{"ps5":120},{"racSimul":200},{"vr":120},{"racingSimulator":200}
+    ]
+
     var gamesexp=[
-"Virtual Reality Arena",
-"PlayStation VR",
+        "Virtual Reality Arena",
+        "PlayStation VR",
         "PlayStation 5 (I)",
         "PlayStation 5 (II)",
         "PlayStation 5 (III)",
@@ -49,6 +53,27 @@ function Shubhh() {
         "Racing Simulators",
         "Arcade Classics",
     ]
+
+    const calculateAmount = () => {
+        if (!gexp || !nop) return;
+        
+        let price = 0;
+        if (gexp.includes("PlayStation 4")) {
+            price = prices[0].ps4;
+        } else if (gexp.includes("PlayStation 5")) {
+            price = prices[1].ps5;
+        } else if (gexp.includes("Racing Simulators")) {
+            price = prices[2].racSimul;
+        } else if (gexp.includes("Virtual Reality")) {
+            price = prices[3].vr;
+        }
+        
+        const totalAmount = price * parseInt(nop);
+        setamount(totalAmount);
+    }
+    React.useEffect(() => {
+        calculateAmount();
+    }, [gexp, nop]);
 
                                     
     // const handleChange = (e) => {
@@ -92,7 +117,7 @@ function Shubhh() {
                     {/* <!-- <a href="login.html" class="nav-link font-bold">Login</a> --> */}
                 </nav>
 
-                <button id="contact" onclick="window.location.href='#location'" class="btn btn-gradient-blue-red">Contact Us</button>
+                <a id="contact" href='#location' class="btn btn-gradient-blue-red">Contact Us</a>
             </div>
         </div>
     </header>
@@ -315,11 +340,11 @@ function Shubhh() {
                                 <label for="date">Date</label>
                                 <div class="input-icon">
                                     <i class="fas fa-calendar"></i>
-                                    <input type="date" id="date" class="form-input" onChange={(e) => setDate(e.target.value)}
+                                    <input type="datetime-local" id="date" class="form-input" onChange={(e) => setDate(e.target.value)}
                                 required />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            {/* <div class="form-group">
                                 <label for="time">Time</label>
                                 <div class="input-icon">
                                     <i class="fas fa-clock"></i>
@@ -330,11 +355,8 @@ function Shubhh() {
                                     {timings.map((t,index) => (
                                         <option key={index} value={timeslot}>{t}</option>
                                     ))}
-                                </select> */}
-                            </div>
-                        </div>
-
-                        <div class="form-row">
+                                </select> *
+                            </div> */}
                             <div class="form-group">
                                 <label for="people">Number of People</label>
                                 <div class="input-icon">
@@ -343,6 +365,17 @@ function Shubhh() {
                                 required />
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="form-row">
+                            {/* <div class="form-group">
+                                <label for="people">Number of People</label>
+                                <div class="input-icon">
+                                    <i class="fas fa-users"></i>
+                                    <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" onChange={(e) => setnop(e.target.value)}
+                                required />
+                                </div>
+                            </div> */}
                             <div class="form-group">
                                 <label for="experience">Gaming Experience</label>
                                 <select id="experience" class="form-select" onChange={(e) => setgexp(e.target.value)}>
@@ -350,22 +383,21 @@ function Shubhh() {
                                     {gamesexp.map((t,index) => (
                                         <option key={index} value={gexp} >{t}</option>
                                     ))}
-
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Total Amount</label>
+                                
+                                <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+                                 <i class="fa-solid fa-indian-rupee-sign"></i> 
+                                     {amount}
+                                </div>
                             </div>
                            
                         </div>
-                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="people">Total Amount</label>
-                                <div class="input-icon">
-                                <i class="fa-solid fa-indian-rupee-sign"></i>
-                                <div class="feature-details neon-border feature-content">
-                                <h3 >500</h3>
-                            </div>
-                                </div>
-                            </div>
-                            </div>
+                         {/* <div class="form-row">
+                            
+                            </div> */}
 
                         {/* <div class="form-group">
                             <label for="requests">Special Requests</label>
