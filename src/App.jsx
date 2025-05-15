@@ -1,10 +1,12 @@
 import React from 'react'
+import './index.css'
 import Shubhh from './Components/Shubhh'
-// import Admin from './Components/Admin.jsx'
+import Home from './Components/Home'
+import Dashboard from './Components/Dashboard'
 
 function App() {
   return (
-    <Shubhh />
+    <Dashboard />
   )
 }
 

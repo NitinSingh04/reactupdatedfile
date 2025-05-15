@@ -1351,3 +1351,18 @@
       grid-template-columns: repeat(4, 1fr);
     }
   }
+
+
+
+
+  /* Home design  */
+  /* #hlg{
+    margin:10px;
+    
+  } */
+   #subbm{
+    margin-top:1rem;
+   }
+   #upcoming-event-section{
+    margin-top: 20px;
+   }
