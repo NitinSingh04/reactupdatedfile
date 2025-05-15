@@ -16,14 +16,12 @@ function Shubhh() {
     const [fullName,setFullName] = useState()
     const [mobilenumber,setmobilenumber]= useState()
     const [date,setDate] = useState()
-    const [startingTime,setStartingTime] = useState()
     const [nop,setnop] = useState()
     const [gexp,setgexp] = useState()
-    const [specreq,setspecreq] = useState()
     const [data,setData]= useState()
     const [amount,setamount]=useState(0)
 
-    console.log(fullName,mobilenumber,Date,startingTime,nop,gexp,specreq)
+    console.log(fullName,mobilenumber,date,nop,gexp)
 
     // var timings=[
     //                                "11:00 AM-12:00 PM",
@@ -38,9 +36,13 @@ function Shubhh() {
     //                                 "9:00 PM-10:00 PM", 
     // ]
 
+    var prices=[
+        {"ps4":100},{"ps5":120},{"racSimul":200},{"vr":120},{"racingSimulator":200}
+    ]
+
     var gamesexp=[
-"Virtual Reality Arena",
-"PlayStation VR",
+        "Virtual Reality Arena",
+        "PlayStation VR",
         "PlayStation 5 (I)",
         "PlayStation 5 (II)",
         "PlayStation 5 (III)",
@@ -49,6 +51,27 @@ function Shubhh() {
         "Racing Simulators",
         "Arcade Classics",
     ]
+
+    const calculateAmount = () => {
+        if (!gexp || !nop) return;
+        
+        let price = 0;
+        if (gexp.includes("PlayStation 4")) {
+            price = prices[0].ps4;
+        } else if (gexp.includes("PlayStation 5")) {
+            price = prices[1].ps5;
+        } else if (gexp.includes("Racing Simulators")) {
+            price = prices[2].racSimul;
+        } else if (gexp.includes("Virtual Reality")) {
+            price = prices[3].vr;
+        }
+        
+        const totalAmount = price * parseInt(nop);
+        setamount(totalAmount);
+    }
+    React.useEffect(() => {
+        calculateAmount();
+    }, [gexp, nop]);
 
                                     
     // const handleChange = (e) => {
@@ -62,7 +85,7 @@ function Shubhh() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await axios.post('http://localhost:4000/api/createTicket', {mobileNumber:mobilenumber, amount:100, date:date, startingTime:startingTime, game:gexp, guest:nop});
+          const response = await axios.post('http://localhost:4000/api/createTicket', {mobileNumber:mobilenumber, amount:amount, startingTime:date, game:gexp, guest:nop});
           console.log(response.data);
           setData(response.data.message)
          
@@ -92,7 +115,7 @@ function Shubhh() {
                     {/* <!-- <a href="login.html" class="nav-link font-bold">Login</a> --> */}
                 </nav>
 
-                <button id="contact" class="btn btn-gradient-blue-red">Contact Us</button>
+                <a id="contact" href='#location' class="btn btn-gradient-blue-red">Contact Us</a>
             </div>
         </div>
     </header>
@@ -315,12 +338,12 @@ function Shubhh() {
                                 <label htmlFor="date">Date</label>
                                 <div class="input-icon">
                                     <i class="fas fa-calendar"></i>
-                                    <input type="date" id="date" class="form-input" value={date} onChange={(e) => setDate(e.target.value)}
+                                    <input type="datetime-local" id="date" class="form-input" value={date} onChange={(e) => setDate(e.target.value)}
                                 required />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label htmlFor="time">Time</label>
+                            {/* <div class="form-group">
+                                <label for="time">Time</label>
                                 <div class="input-icon">
                                     <i class="fas fa-clock"></i>
                                     <input type='datetime-local' id="time" class="form-input" value={startingTime} onChange={(e) => setStartingTime(e.target.value)}/>
@@ -330,42 +353,57 @@ function Shubhh() {
                                     {timings.map((t,index) => (
                                         <option key={index} value={timeslot}>{t}</option>
                                     ))}
-                                </select> */}
+                                </select> *
+                            </div> */}
+                            <div class="form-group">
+                                <label for="people">Number of People</label>
+                                <div class="input-icon">
+                                    <i class="fas fa-users"></i>
+                                    <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" 
+                                    onChange={(e) => {
+                                        setnop(e.target.value);
+                                        calculateAmount();
+                                    }}
+                                    required />
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group">
-                                <label htmlFor="people">Number of People</label>
+                            {/* <div class="form-group">
+                                <label for="people">Number of People</label>
                                 <div class="input-icon">
                                     <i class="fas fa-users"></i>
                                     <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" value={nop} onChange={(e) => setnop(e.target.value)}
                                 required />
                                 </div>
-                            </div>
+                            </div> */}
                             <div class="form-group">
-                                <label htmlFor="experience">Gaming Experience</label>
-                                <select id="experience" class="form-select" onChange={(e) => setgexp(e.target.value)}>
+                                <label for="experience">Gaming Experience</label>
+                                <select id="experience" class="form-select" 
+                                onChange={(e) => {
+                                    setgexp(e.target.value);
+                                    calculateAmount();
+                                }}>
                                     <option value="" disabled selected>Select experience</option>
                                     {gamesexp.map((t,index) => (
-                                        <option key={index} value={gexp} >{t}</option>
+                                        <option key={index} value={t}>{t}</option>
                                     ))}
-
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Total Amount</label>
+                                
+                                <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+                                 <i class="fa-solid fa-indian-rupee-sign"></i> 
+                                     {amount}
+                                </div>
                             </div>
                            
                         </div>
-                         <div class="form-row">
-                            <div class="form-group">
-                                <label htmlFor="people">Total Amount</label>
-                                <div class="input-icon">
-                                <i class="fa-solid fa-indian-rupee-sign"></i>
-                                <div class="feature-details neon-border feature-content">
-                                <h3 >500</h3>
-                            </div>
-                                </div>
-                            </div>
-                            </div>
+                         {/* <div class="form-row">
+                            
+                            </div> */}
 
                         {/* <div class="form-group">
                             <label for="requests">Special Requests</label>

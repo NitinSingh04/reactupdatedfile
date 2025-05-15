@@ -2,9 +2,9 @@ import { Ticket } from "../models/tickets.model.js";
 
 const createTicket = async (req, res) => {
   try {
-    const { mobileNumber, amount, date, startingTime, game, guest } = req.body;
+    const { mobileNumber, amount, startingTime, game, guest } = req.body;
 
-    const verify = [mobileNumber, amount, date, startingTime, game, guest].filter(
+    const verify = [mobileNumber, amount, startingTime, game, guest].filter(
       (item) => item == undefined || item == null
     );
 
@@ -23,7 +23,6 @@ const createTicket = async (req, res) => {
 
 
     const existedTicket = await Ticket.findOne({
-      date,
       game,
       $or: [
         { startingTime: { $lt: endingTime }, endingTime: { $gt: newStartingTime } }
@@ -43,7 +42,7 @@ const createTicket = async (req, res) => {
       startingTime: newStartingTime,
       endingTime,
       game,
-      date,
+      date: startingTime,
       amount,
       guest,
       flag: "Waiting",
