@@ -361,8 +361,12 @@ function Shubhh() {
                                 <label for="people">Number of People</label>
                                 <div class="input-icon">
                                     <i class="fas fa-users"></i>
-                                    <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" onChange={(e) => setnop(e.target.value)}
-                                required />
+                                    <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" 
+                                    onChange={(e) => {
+                                        setnop(e.target.value);
+                                        calculateAmount();
+                                    }}
+                                    required />
                                 </div>
                             </div>
                         </div>
@@ -378,10 +382,14 @@ function Shubhh() {
                             </div> */}
                             <div class="form-group">
                                 <label for="experience">Gaming Experience</label>
-                                <select id="experience" class="form-select" onChange={(e) => setgexp(e.target.value)}>
+                                <select id="experience" class="form-select" 
+                                onChange={(e) => {
+                                    setgexp(e.target.value);
+                                    calculateAmount();
+                                }}>
                                     <option value="" disabled selected>Select experience</option>
                                     {gamesexp.map((t,index) => (
-                                        <option key={index} value={gexp} >{t}</option>
+                                        <option key={index} value={t}>{t}</option>
                                     ))}
                                 </select>
                             </div>
