@@ -15,27 +15,28 @@ function Shubhh() {
     
     const [fullName,setFullName] = useState()
     const [mobilenumber,setmobilenumber]= useState()
-    const [Date,setDate] = useState()
-    const [timeslot,setTimeslot] = useState()
+    const [date,setDate] = useState()
+    const [startingTime,setStartingTime] = useState()
     const [nop,setnop] = useState()
     const [gexp,setgexp] = useState()
     const [specreq,setspecreq] = useState()
     const [data,setData]= useState()
+    const [amount,setamount]=useState(0)
 
-    // console.log(fullName,mobilenumber,Date,timeslot,nop,gexp,specreq)
+    console.log(fullName,mobilenumber,Date,startingTime,nop,gexp,specreq)
 
-    var timings=[
-                                   "11:00 AM-12:00 PM",
-                                    "1:00 PM-2:00 PM",
-                                    "2:00 PM-3:00 PM",
-                                    "3:00 PM-4:00 PM",
-                                    "4:00 PM-5:00 PM",
-                                    "5:00 PM-6:00 PM",
-                                    "6:00 PM-7:00 PM",
-                                    "7:00 PM-8:00 PM",
-                                    "8:00 PM-9:00 PM",
-                                    "9:00 PM-10:00 PM", 
-    ]
+    // var timings=[
+    //                                "11:00 AM-12:00 PM",
+    //                                 "1:00 PM-2:00 PM",
+    //                                 "2:00 PM-3:00 PM",
+    //                                 "3:00 PM-4:00 PM",
+    //                                 "4:00 PM-5:00 PM",
+    //                                 "5:00 PM-6:00 PM",
+    //                                 "6:00 PM-7:00 PM",
+    //                                 "7:00 PM-8:00 PM",
+    //                                 "8:00 PM-9:00 PM",
+    //                                 "9:00 PM-10:00 PM", 
+    // ]
 
     var gamesexp=[
 "Virtual Reality Arena",
@@ -61,9 +62,9 @@ function Shubhh() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await axios.post('https://finalbgmi-backend.onrender.com/api/createTicket', {mobileNumber:mobilenumber, amount:100, date:Date, timeslot:timeslot, game:gexp, guest:nop});
-          console.log('booking successful:', response.data);
-        //   setData(response.data.message)
+          const response = await axios.post('http://localhost:4000/api/createTicket', {mobileNumber:mobilenumber, amount:100, date:date, startingTime:startingTime, game:gexp, guest:nop});
+          console.log(response.data);
+          setData(response.data.message)
          
         } catch (error) {
           console.error('Login failed:', error.response?.data || error.message);
@@ -80,7 +81,7 @@ function Shubhh() {
             <div class="navbar-content">
                 <a href="/" class="logo">
                     {/* <!-- <i class="fas fa-bolt"></i> --> */}
-                     <img id="logophoto" src={logo} class="" alt="" />
+                     <img id="logophoto" src={logo} alt="" />
                     <span id="battleLogo" class="neon-text neon-red">BATTLEGROUND</span>
                 </a>
                 <nav class="nav-links">
@@ -91,7 +92,7 @@ function Shubhh() {
                     {/* <!-- <a href="login.html" class="nav-link font-bold">Login</a> --> */}
                 </nav>
 
-                <button id="contact" onclick="window.location.href='#location'" class="btn btn-gradient-blue-red">Contact Us</button>
+                <button id="contact" class="btn btn-gradient-blue-red">Contact Us</button>
             </div>
         </div>
     </header>
@@ -297,73 +298,79 @@ function Shubhh() {
                     <form onSubmit={handleSubmit} id="bookingForm">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="fullName">Full Name</label>
+                                <label htmlFor="fullName">Full Name</label>
                                 <input type="text" id="fullName" placeholder="Your name" class="form-input" value={fullName}
                                 onChange={(e) => setFullName(e.target.value)}
                                 required />
                             </div>
                             <div class="form-group">
-                                <label for="mobile number">Mobile Number</label>
-                                <input type="" id="Mnumber" placeholder="Mobile Number" class="form-input" onChange={(e) => setmobilenumber(e.target.value)}
+                                <label htmlFor="mobile number">Mobile Number</label>
+                                <input type="" id="Mnumber" placeholder="Mobile Number" class="form-input" value={mobilenumber} onChange={(e) => setmobilenumber(e.target.value)}
                                 required />
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="date">Date</label>
+                                <label htmlFor="date">Date</label>
                                 <div class="input-icon">
                                     <i class="fas fa-calendar"></i>
-                                    <input type="date" id="date" class="form-input" onChange={(e) => setDate(e.target.value)}
+                                    <input type="date" id="date" class="form-input" value={date} onChange={(e) => setDate(e.target.value)}
                                 required />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="time">Time</label>
-                                {/* <div class="input-icon">
+                                <label htmlFor="time">Time</label>
+                                <div class="input-icon">
                                     <i class="fas fa-clock"></i>
-                                    <input type="time" id="time" class="form-input" />
-                                </div> */}
-                                 <select id="experience" class="form-select" onChange={(e) => setTimeslot(e.target.value)}>
+                                    <input type='datetime-local' id="time" class="form-input" value={startingTime} onChange={(e) => setStartingTime(e.target.value)}/>
+                                </div>
+                                 {/* <select id="experience" class="form-select" onChange={(e) => setTimeslot(e.target.value)}>
                                     <option value="" disabled selected>Select Time</option>
                                     {timings.map((t,index) => (
                                         <option key={index} value={timeslot}>{t}</option>
                                     ))}
-                                </select>
+                                </select> */}
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="people">Number of People</label>
+                                <label htmlFor="people">Number of People</label>
                                 <div class="input-icon">
                                     <i class="fas fa-users"></i>
-                                    <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" onChange={(e) => setnop(e.target.value)}
+                                    <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" value={nop} onChange={(e) => setnop(e.target.value)}
                                 required />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="experience">Gaming Experience</label>
+                                <label htmlFor="experience">Gaming Experience</label>
                                 <select id="experience" class="form-select" onChange={(e) => setgexp(e.target.value)}>
                                     <option value="" disabled selected>Select experience</option>
-                                    {/* <option value="vr">Virtual Reality Arena</option>
-                                    <option value="laser">PlayStation 5</option>
-                                    <option value="console">PlayStation 4</option>
-                                    <option value="racing">Racing Simulators</option>
-                                    <option value="arcade">Arcade Classics</option>
-                                    <option value="escape">Escape Rooms</option> */}
                                     {gamesexp.map((t,index) => (
                                         <option key={index} value={gexp} >{t}</option>
                                     ))}
 
                                 </select>
                             </div>
+                           
                         </div>
+                         <div class="form-row">
+                            <div class="form-group">
+                                <label htmlFor="people">Total Amount</label>
+                                <div class="input-icon">
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                                <div class="feature-details neon-border feature-content">
+                                <h3 >500</h3>
+                            </div>
+                                </div>
+                            </div>
+                            </div>
 
-                        <div class="form-group">
+                        {/* <div class="form-group">
                             <label for="requests">Special Requests</label>
                             <textarea id="requests" rows="4" placeholder="Any special requirements or requests" class="form-textarea"></textarea>
-                        </div>
+                        </div> */}
 
                         <button type="submit" onSubmit={handleSubmit} class="btn btn-gradient-green-blue btn-full">Book Now</button>
                         {/* <div>{data}</div> */}
@@ -426,7 +433,7 @@ function Shubhh() {
                             </div>
                         </div>
                     </div>  */}
-                </div>+
+                </div>
             </div>
         </div>
     </section>
