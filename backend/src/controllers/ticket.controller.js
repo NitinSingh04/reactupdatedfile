@@ -20,6 +20,7 @@ const createTicket = async (req, res) => {
     const existedTicket = await Ticket.aggregate([
       {
         $match: {
+          date: date,
           game: game
         }
       },
@@ -45,10 +46,10 @@ const createTicket = async (req, res) => {
 
     const createTicket = await Ticket.create({
       mobileNumber,
-      date,
       startingTime,
       endingTime,
       game,
+      date,
       amount,
       guest,
       flag: "Waiting",

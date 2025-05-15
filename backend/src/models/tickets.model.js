@@ -15,11 +15,14 @@ const ticketSchema = new mongoose.Schema(
       def: 1
     },
     date: {
-      type: String,
+      type: Date
+    },
+    startingTime: {
+      type: Number,
       required: true,
     },
-    timeslot: {
-      type: String,
+    endingTime: {
+      type: Number,
       required: true,
     },
     game: {
@@ -29,10 +32,7 @@ const ticketSchema = new mongoose.Schema(
     flag: {
       type: String,
       def: "Waiting",
-    },
-    shop: {
-      type: String,
-    },
+    }
   },
   { timestamps: true }
 );
