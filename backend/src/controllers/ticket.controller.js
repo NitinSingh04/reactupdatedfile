@@ -2,9 +2,9 @@ import { Ticket } from "../models/tickets.model.js";
 
 const createTicket = async (req, res) => {
   try {
-    const { mobileNumber, amount, date, timeslot, game, guest } = req.body;
+    const { mobileNumber, amount, date, startingTime, game, guest } = req.body;
 
-    const verify = [mobileNumber, amount, date, timeslot, game, guest].filter(
+    const verify = [mobileNumber, amount, date, startingTime, game, guest].filter(
       (item) => item == undefined || item == null
     );
 
@@ -15,12 +15,22 @@ const createTicket = async (req, res) => {
       });
     }
 
+    const endingTime = startingTime + 3600
+
     const existedTicket = await Ticket.aggregate([
       {
         $match: {
-          date: date,
-          timeslot: timeslot,
-          game: game,
+          game: game
+        }
+      },
+      {
+        $match: {
+          $expr: {
+            $and: [
+              { $lt: ["$startingTime", startingTime] },
+              { $gt: ["$endingTime", endingTime] }
+            ]
+          }
         },
       },
     ]);
@@ -36,7 +46,8 @@ const createTicket = async (req, res) => {
     const createTicket = await Ticket.create({
       mobileNumber,
       date,
-      timeslot,
+      startingTime,
+      endingTime,
       game,
       amount,
       guest,
