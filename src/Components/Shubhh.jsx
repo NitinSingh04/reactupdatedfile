@@ -21,21 +21,22 @@ function Shubhh() {
     const [gexp,setgexp] = useState()
     const [specreq,setspecreq] = useState()
     const [data,setData]= useState()
+    const [amount,setamount]=useState(0)
 
-    // console.log(fullName,mobilenumber,Date,timeslot,nop,gexp,specreq)
+    console.log(fullName,mobilenumber,Date,timeslot,nop,gexp,specreq)
 
-    var timings=[
-                                   "11:00 AM-12:00 PM",
-                                    "1:00 PM-2:00 PM",
-                                    "2:00 PM-3:00 PM",
-                                    "3:00 PM-4:00 PM",
-                                    "4:00 PM-5:00 PM",
-                                    "5:00 PM-6:00 PM",
-                                    "6:00 PM-7:00 PM",
-                                    "7:00 PM-8:00 PM",
-                                    "8:00 PM-9:00 PM",
-                                    "9:00 PM-10:00 PM", 
-    ]
+    // var timings=[
+    //                                "11:00 AM-12:00 PM",
+    //                                 "1:00 PM-2:00 PM",
+    //                                 "2:00 PM-3:00 PM",
+    //                                 "3:00 PM-4:00 PM",
+    //                                 "4:00 PM-5:00 PM",
+    //                                 "5:00 PM-6:00 PM",
+    //                                 "6:00 PM-7:00 PM",
+    //                                 "7:00 PM-8:00 PM",
+    //                                 "8:00 PM-9:00 PM",
+    //                                 "9:00 PM-10:00 PM", 
+    // ]
 
     var gamesexp=[
 "Virtual Reality Arena",
@@ -63,7 +64,7 @@ function Shubhh() {
         try {
           const response = await axios.post('https://finalbgmi-backend.onrender.com/api/createTicket', {mobileNumber:mobilenumber, amount:100, date:Date, timeslot:timeslot, game:gexp, guest:nop});
           console.log('booking successful:', response.data);
-        //   setData(response.data.message)
+          setData(response.data.message)
          
         } catch (error) {
           console.error('Login failed:', error.response?.data || error.message);
@@ -320,16 +321,16 @@ function Shubhh() {
                             </div>
                             <div class="form-group">
                                 <label for="time">Time</label>
-                                {/* <div class="input-icon">
+                                <div class="input-icon">
                                     <i class="fas fa-clock"></i>
-                                    <input type="time" id="time" class="form-input" />
-                                </div> */}
-                                 <select id="experience" class="form-select" onChange={(e) => setTimeslot(e.target.value)}>
+                                    <input type="time" id="time" class="form-input" onChange={(e) => setTimeslot(e.target.value)}/>
+                                </div>
+                                 {/* <select id="experience" class="form-select" onChange={(e) => setTimeslot(e.target.value)}>
                                     <option value="" disabled selected>Select Time</option>
                                     {timings.map((t,index) => (
                                         <option key={index} value={timeslot}>{t}</option>
                                     ))}
-                                </select>
+                                </select> */}
                             </div>
                         </div>
 
@@ -346,24 +347,30 @@ function Shubhh() {
                                 <label for="experience">Gaming Experience</label>
                                 <select id="experience" class="form-select" onChange={(e) => setgexp(e.target.value)}>
                                     <option value="" disabled selected>Select experience</option>
-                                    {/* <option value="vr">Virtual Reality Arena</option>
-                                    <option value="laser">PlayStation 5</option>
-                                    <option value="console">PlayStation 4</option>
-                                    <option value="racing">Racing Simulators</option>
-                                    <option value="arcade">Arcade Classics</option>
-                                    <option value="escape">Escape Rooms</option> */}
                                     {gamesexp.map((t,index) => (
                                         <option key={index} value={gexp} >{t}</option>
                                     ))}
 
                                 </select>
                             </div>
+                           
                         </div>
+                         <div class="form-row">
+                            <div class="form-group">
+                                <label for="people">Total Amount</label>
+                                <div class="input-icon">
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                                <div class="feature-details neon-border feature-content">
+                                <h3 >500</h3>
+                            </div>
+                                </div>
+                            </div>
+                            </div>
 
-                        <div class="form-group">
+                        {/* <div class="form-group">
                             <label for="requests">Special Requests</label>
                             <textarea id="requests" rows="4" placeholder="Any special requirements or requests" class="form-textarea"></textarea>
-                        </div>
+                        </div> */}
 
                         <button type="submit" onSubmit={handleSubmit} class="btn btn-gradient-green-blue btn-full">Book Now</button>
                         {/* <div>{data}</div> */}
@@ -426,7 +433,7 @@ function Shubhh() {
                             </div>
                         </div>
                     </div>  */}
-                </div>+
+                </div>
             </div>
         </div>
     </section>
