@@ -2,9 +2,9 @@ import { Ticket } from "../models/tickets.model.js";
 
 const createTicket = async (req, res) => {
   try {
-    const { mobileNumber, amount, date, startingTime, game, guest } = req.body;
+    const { mobileNumber, amount, startingTime, game, guest } = req.body;
 
-    const verify = [mobileNumber, amount, date, startingTime, game, guest].filter(
+    const verify = [mobileNumber, amount, startingTime, game, guest].filter(
       (item) => item == undefined || item == null
     );
 
@@ -15,28 +15,22 @@ const createTicket = async (req, res) => {
       });
     }
 
-    const endingTime = startingTime + 3600
+    const newStartingTime = new Date(startingTime).getTime()
+    console.log("Milliseconds",typeof(newStartingTime))
 
-    const existedTicket = await Ticket.aggregate([
-      {
-        $match: {
-          game: game
-        }
-      },
-      {
-        $match: {
-          $expr: {
-            $and: [
-              { $lt: ["$startingTime", startingTime] },
-              { $gt: ["$endingTime", endingTime] }
-            ]
-          }
-        },
-      },
-    ]);
+    // const newstartingTime = Number(startingTime)
+    const endingTime = newStartingTime + 3600000
+
+
+    const existedTicket = await Ticket.findOne({
+      game,
+      $or: [
+        { startingTime: { $lt: endingTime }, endingTime: { $gt: newStartingTime } }
+      ]
+    });
 
     console.log(existedTicket);
-    if (existedTicket[0]) {
+    if (existedTicket) {
       return res.json({
         message: "Already Booked.",
         success: true,
@@ -45,10 +39,10 @@ const createTicket = async (req, res) => {
 
     const createTicket = await Ticket.create({
       mobileNumber,
-      date,
-      startingTime,
+      startingTime: newStartingTime,
       endingTime,
       game,
+      date: startingTime,
       amount,
       guest,
       flag: "Waiting",
@@ -70,7 +64,7 @@ const createTicket = async (req, res) => {
   } catch (error) {
     console.log("Error : ", error);
     return res.json({
-      message: "Try again",
+      message: error,
       success: false,
     });
   }
@@ -96,6 +90,7 @@ const deleteTicket = async (req, res) => {
     if (checkTicket) {
       return res.json({
         message: "Something went wrong during database call",
+        data: ticket ,
         success: false,
       });
     }
@@ -150,7 +145,7 @@ const changeFlag = async (req, res) => {
   return res.json({
     message: "Flag updated successfully",
     success: true,
-    data: existedTicket,
+    data: existedTicket,ticket
   });
 };
 
