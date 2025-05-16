@@ -10,7 +10,7 @@ function App() {
     <div>
     <Shubhh/>
     <Home />
-    {/* <Dashboard></Dashboard> */}
+    <Dashboard></Dashboard>
     </div>
   )
 }

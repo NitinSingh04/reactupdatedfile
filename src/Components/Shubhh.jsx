@@ -22,6 +22,7 @@ function Shubhh() {
     const [specreq,setspecreq] = useState()
     const [data,setData]= useState()
     const [amount,setamount]=useState(0)
+    const [warning, setWarning] = useState("")
 
     console.log(fullName,mobilenumber,Date,timeslot,nop,gexp,specreq)
 
@@ -39,18 +40,20 @@ function Shubhh() {
     // ]
 
     var prices=[
-        {"ps4":100},{"ps5":120},{"racSimul":200},{"vr":120},{"racingSimulator":200}
+        {"ps4":80},{"ps5":120},{"racSimul":200},{"vr":120},{"arc":50},{"rc20":120},
+        {"psfour":100},{"psfive":150}
     ]
 
     var gamesexp=[
         "Virtual Reality Arena",
-        "PlayStation VR",
+        // "PlayStation VR",
         "PlayStation 5 (I)",
         "PlayStation 5 (II)",
         "PlayStation 5 (III)",
         "PlayStation 4 (I)",
         "PlayStation 4 (II)",
-        "Racing Simulators",
+        "Racing Simulators-20 minutes",
+        "Racing Simulators-60 minutes",
         "Arcade Classics",
     ]
 
@@ -59,15 +62,27 @@ function Shubhh() {
         
         let price = 0;
         if (gexp.includes("PlayStation 4")) {
-            price = prices[0].ps4;
+            if(parseInt(nop)==1){
+                price=prices[6].psfour;
+            }else{
+                price = prices[0].ps4;
+            }
         } else if (gexp.includes("PlayStation 5")) {
-            price = prices[1].ps5;
-        } else if (gexp.includes("Racing Simulators")) {
+            if(parseInt(nop)==1){
+                price= prices[7].psfive;
+            }
+            else{
+                price = prices[1].ps5;
+            }
+        } else if (gexp.includes("Racing Simulators-60")) {
             price = prices[2].racSimul;
         } else if (gexp.includes("Virtual Reality")) {
             price = prices[3].vr;
+        }else if (gexp.includes("Arcade Classics")) {
+            price = prices[4].arc;
+        }else if (gexp.includes("Racing Simulators-20")) {
+            price = prices[5].rc20;
         }
-        
         const totalAmount = price * parseInt(nop);
         setamount(totalAmount);
     }
@@ -361,13 +376,21 @@ function Shubhh() {
                                 <label for="people">Number of People</label>
                                 <div class="input-icon">
                                     <i class="fas fa-users"></i>
-                                    <input type="number" id="people" min="1" placeholder="Number of guests" class="form-input" 
+                                    <input type="number" id="people" min="1" max="10" placeholder="Number of guests" class="form-input" 
                                     onChange={(e) => {
-                                        setnop(e.target.value);
+                                        const value = parseInt(e.target.value);
+                                        if (value > 10) {
+                                            setWarning("can't book more than 10 peoples");
+                                            setnop(10);
+                                        } else {
+                                            setWarning("");
+                                            setnop(value);
+                                        }
                                         calculateAmount();
                                     }}
                                     required />
                                 </div>
+                                {warning && <div style={{ color: 'red', marginTop: '5px' }}>{warning}</div>}
                             </div>
                         </div>
 
@@ -396,7 +419,7 @@ function Shubhh() {
                             <div class="form-group">
                                 <label for="amount">Total Amount</label>
                                 
-                                <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+                                <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px',gap:'5px'}}>
                                  <i class="fa-solid fa-indian-rupee-sign"></i> 
                                      {amount}
                                 </div>
@@ -415,6 +438,9 @@ function Shubhh() {
                         <button type="submit" onSubmit={handleSubmit} class="btn btn-gradient-green-blue btn-full">Book Now</button>
                         {/* <div>{data}</div> */}
                     </form>
+                    <div  style={{ padding: '10px', color: 'red'}} >
+                        Disclaimer:All booking are of 1 hour except VR and racing simulator
+                    </div>
                 </div>
 
                 <div class="booking-info">
