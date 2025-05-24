@@ -1232,7 +1232,7 @@ function Shubhh() {
 
                 {/* */}
                 <section className="hero" id="hero">
-                    <div className="hero-bg" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1542773998-9325f0a098d7?auto=format&fit=crop&w=1920&q=80)` }} /> {/* Example background image */}
+                    <div className="hero-bg" /> {/* Example background image */}
                     <div className="hero-overlay"></div>
                     <div className="hero-content"> {/* Removed heroSection-bg as hero-overlay and hero-bg handle visual */}
                         <h1 id="holu" className="hero-title">
