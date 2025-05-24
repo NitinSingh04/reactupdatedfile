@@ -43,7 +43,7 @@ function Shubhh() {
     ]
 
     var gamesexp=[
-        "Virtual Reality Arena",
+        "Virtual Reality Arena-10",
         // "PlayStation VR",
         "PlayStation 5 (I)",
         "PlayStation 5 (II)",

@@ -7,7 +7,11 @@ import { div } from 'framer-motion/client'
 
 function App() {
   return (
+    <div>
     <Shubhh />
+    {/* <Home/> */}
+    <Dashboard/>
+    </div>
   )
 }
 
